@@ -12,12 +12,16 @@ GET http://localhost/api/country/nl/categories HTTP/1.1
 
 ###
 
-POST http://localhost/api/country/be/food HTTP/1.1
-content-type: application/json
+POST http://localhost/api/country/be/ HTTP/1.1
+Content-Type: application/json
+
 {
-    "category_name": "sport",
+    "category": "technology"
 }
 
 ###
 DELETE http://localhost/api/country/be/joselito HTTP/1.1
 content-type: application/json
+
+###
+GET http://localhost/api/categories HTTP/1.1
