@@ -43,8 +43,10 @@ class CountryController extends Controller
         return response()->json(['country' => $country]);
     }
 
-    public function addCategory(Request $request, $countryCode, $category)
+    public function addCountryCategory(Request $r, $countryCode)
     {
+
+        $category = $r->input('category');
         $country = Country::where('code', $countryCode)->first();
         if (!$country) {
             return response()->json(['message' => 'Country not found'], 404);
@@ -64,7 +66,7 @@ class CountryController extends Controller
         return response()->json(['categories' => $country->categories]);
     }
 
-    public function removeCategory(Request $request, $countryCode, $category)
+    public function removeCountryCategory($countryCode, $category)
     {
 
         $country = Country::where('code', $countryCode)->first();
@@ -86,5 +88,10 @@ class CountryController extends Controller
 
 
         return response()->json(['message' => 'Category {$category} removed'], 200);
+    }
+
+    public function listAllCategories()
+    {
+        return response()->json(['categories' => Category::all()]);
     }
 }
