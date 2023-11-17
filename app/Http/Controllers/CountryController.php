@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\GeneralJsonException;
 use Illuminate\Http\Request;
 use App\Models\Country;
 use App\Models\Category;
-use App\Models\Language;
 
 class CountryController extends Controller
 {
@@ -45,22 +45,16 @@ class CountryController extends Controller
 
     public function addCountryCategory(Request $r, $countryCode)
     {
-
         $category = $r->input('category');
         $country = Country::where('code', $countryCode)->first();
-        if (!$country) {
-            return response()->json(['message' => 'Country not found'], 404);
-        }
 
-        if (!$category) {
-            return response()->json(['message' => 'Category name is required'], 400);
-        }
+        throw_if(!$country, GeneralJsonException::class, 'Country not found', 404);
+
+        throw_if(!$category, GeneralJsonException::class, 'Category name is required', 400);
 
         $category = Category::where('name', $category)->first();
 
-        if (!$category) {
-            return response()->json(['message' => 'Category not valid'], 400);
-        }
+        throw_if(!$category, GeneralJsonException::class, 'Category not valid', 400);
         $country->categories()->syncWithoutDetaching($category->id);
 
         return response()->json(['categories' => $country->categories]);

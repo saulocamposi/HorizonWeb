@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\GeneralJsonException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Country;
 use App\Models\Category;
+use Exception;
 
 class CountryControllerTest extends TestCase
 {
@@ -38,5 +40,21 @@ class CountryControllerTest extends TestCase
             'country_id' => $country->id,
             'category_id' => $category->id,
         ]);
+    }
+
+    public function testExceptionCountryNotFound()
+    {
+        $this->expectException(GeneralJsonException::class);
+        $this->expectExceptionMessage('Country not found');
+        $category = Category::factory()->create();
+        $this->withoutExceptionHandling()->post("api/country/1", ['category' => $category->name]);
+    }
+
+    public function testExceptionCategoryNotFound()
+    {
+        $this->expectException(GeneralJsonException::class);
+        $this->expectExceptionMessage('Category name is required');
+        $country = Country::factory()->create();
+        $this->withoutExceptionHandling()->post("api/country/{$country->code}", ['category' => '']);
     }
 }
