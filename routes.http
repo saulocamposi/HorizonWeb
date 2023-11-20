@@ -1,6 +1,10 @@
 GET http://localhost/api/news/ca/en/crime HTTP/1.1
 
 ###
+GET http://localhost/api/news/article/ca/en/crime HTTP/1.1
+
+###
+
 GET http://localhost/api/countries HTTP/1.1
 
 

@@ -18,4 +18,10 @@ class NewsController extends Controller
         $newsData = $this->newsDataService->getNewsData($countryCode, $language, $category);
         return response()->json(['news' => $newsData]);
     }
+
+    public function getNewsArticles($countryCode, $language, $category)
+    {
+        $newsData = $this->newsDataService->getNewsData($countryCode, $language, $category);
+        return response()->json(['news' => $newsData]);
+    }
 }

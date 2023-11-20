@@ -26,5 +26,7 @@ Route::get('/country/{code}', [CountryController::class, 'getCountryDetails']);
 Route::post('/country/{countryCode}', [CountryController::class, 'addCountryCategory']);
 Route::delete('/country/{countryCode}/{category}', [CountryController::class, 'removeCountryCategory']);
 Route::get('/categories', [CountryController::class, 'listAllCategories']);
+
 Route::get('/news/{countryCode}/{language}/{category}', [NewsController::class, 'getPaginatedNews']);
 Route::get('/news/{countryCode}/{page}', [NewsController::class, 'getPaginatedNews']);
+Route::get('/news/article/{countryCode}/{language}/{category}', [NewsController::class, 'getNewsArticles']);
